@@ -49,6 +49,7 @@ app.use("/api/stats",statRoutes);
 
 //error handler
 app.use((err, req, res, next ) => {
+    console.log("Error: ",err);
     res.status(500).json({message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message});
 })
 
