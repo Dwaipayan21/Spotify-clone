@@ -79,5 +79,23 @@ export const initializeSocket = (server) => {
                 io.emit("user_disconnected", disconnectedUserId); // message that user disconnected
             }
         })
+
+        socket.on("delete_message", async ({ messageId, receiverId, senderId }) => {
+            try {
+                const message = await Message.findById(messageId);
+
+                if (!message || message.senderId !== senderId) return;
+
+                await Message.findByIdAndDelete(messageId);
+
+                const receiverSocketId = userSockets.get(receiverId);
+                if (receiverSocketId) {
+                    io.to(receiverSocketId).emit("message_deleted", messageId);
+                }
+                socket.emit("message_deleted", messageId);
+            } catch (error) {
+                console.error("Error deleting message:", error);
+            }
+        })
     });
 }

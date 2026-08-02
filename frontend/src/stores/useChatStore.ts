@@ -20,6 +20,7 @@ interface ChatStore {
     sendMessage: (receiverId: string, senderId: string, content: string) =>void;
     fetchMessages: (userId: string) => Promise<void>;
     setSelectedUser: (user: User | null) => void;
+    deleteMessage: (messageId: string, receiverId:string, senderId: string) => void;
 }
 
 // connecting to the socket server
@@ -105,8 +106,21 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                 });
             });
 
+            socket.on("message_deleted", (messageId: string) => {
+                set((state) => ({
+                    messages: state.messages.filter((msg) => msg._id !== messageId),
+                }));
+            });
+
             set({isConnected: true});
         }
+    },
+
+    deleteMessage:(messageId, receiverId, senderId) =>{
+        const socket = get().socket;
+        if(!socket) return;
+
+        socket.emit("delete_message", { messageId, receiverId, senderId})
     },
 
     disconnectSocket: () => {

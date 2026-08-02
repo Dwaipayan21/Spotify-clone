@@ -7,6 +7,8 @@ import ChatHeader from './components/ChatHeader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import MessageInput from './components/MessageInput';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
 
 // for the real time of message
 const formatTime = (date : string ) => {
@@ -19,7 +21,7 @@ const formatTime = (date : string ) => {
 
 const ChatPage = () => {
   const { user } = useUser();
-  const { messages, selectedUser, fetchUsers, fetchMessages} = useChatStore();
+  const { messages, selectedUser, fetchUsers, fetchMessages, deleteMessage} = useChatStore();
 
   useEffect( () => {
     if (user) fetchUsers();
@@ -51,7 +53,7 @@ const ChatPage = () => {
                 <div className='p-4 space-y-4'>
                   {messages.map((message) => (
                     <div key={message._id}
-                      className={`flex items-start gap-3 ${message.senderId === user?.id ? "flex-row-reverse" : ""} `}
+                      className={`flex items-start gap-3 group ${message.senderId === user?.id ? "flex-row-reverse" : ""} `}
                     >
                       <Avatar className='size-7'>
                         <AvatarImage 
@@ -67,7 +69,22 @@ const ChatPage = () => {
                         ${message.senderId === (user?.id) ? "bg-green-500" : "bg-zinc-500"}   
                       `}>
                           <p className='text-sm'>{message.content}</p>
-                          <span className='text-xs text-zinc-300 mt-1 block'>{formatTime(message.createdAt)}</span>
+                          {/* time stamp and delete icon */}
+                          <div className='flex items-center gap-2'>
+                            <span className='text-xs text-zinc-300 mt-1 block'>{formatTime(message.createdAt)}</span>
+
+                            {/* message deletetion */}
+                            {message.senderId === user?.id && (
+                              <button
+                                onClick={() => deleteMessage(message._id, selectedUser.clerkId, user?.id)}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity text-zinc-200 hover:text-red-400"
+                                title='Delete message'
+                              >
+                                <Trash2 size={12} />
+                              </button>
+                            )}
+                          </div>
+                          
                       </div>
                     </div>
                   ))}
