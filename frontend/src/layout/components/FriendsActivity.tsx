@@ -6,7 +6,7 @@ import { HeadphonesIcon, Music, Users } from 'lucide-react';
 import React, { use, useEffect } from 'react'
 
 const FriendsActivity = () => {
-    const { users, fetchUsers } = useChatStore();
+    const { users, fetchUsers, onlineUsers, userActivities } = useChatStore();
     const { user } = useUser(); //to get all  the user;
 
     //if the user is authenticated try to fetchUsers() and display it
@@ -16,7 +16,6 @@ const FriendsActivity = () => {
         }
     },[fetchUsers, user])
 
-    const isPlaying = true;
 
   return (
     <div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
@@ -34,49 +33,63 @@ const FriendsActivity = () => {
 
         {/* if user is logged in the this will show */}
         <ScrollArea className="flex-1">
-            {users.map((user) => (
-                <div 
-                    key={user._id}
-                    className='cursor-pointer hover:bg-zinc-800/50 p-3 rounded-md
-                    transition-colors group'
-                >
-                    <div className='flex items-start gap-3'>
-                        <div className='relative'>
-                            <Avatar className="size-10 border border-zinc-800">
-                                <AvatarImage 
-                                    src={user.imageUrl}
-                                    alt={user.fullName}
-                                />
-                                {/* if no image was there then initials will show */}
-                                <AvatarFallback>{user.fullName[0]}</AvatarFallback>
-                            </Avatar>
+            <div className='p-4 space-y-4'>
+                {users.map((user) => {
 
-                            <div 
-                                className='absolute bottom-0 right-0 size-3 rounded-full border-2 
-                                border-zinc-900 bg-zinc-500'
-                                aria-hidden='true' 
-                            />
-                        </div>
+                    const activity = userActivities.get(user.clerkId);
+                    const isPlaying = activity && activity !== "Idle";
 
-                        {/* user name part */}
-                        <div className='flex-1 min-w-0'>
-                            <div className='flex items-center gap-2'>
-                                <span className='font-medium text-sm text-white'>{user.fullName}</span>
-                                {isPlaying && <Music className='size-3.5 text-emerald-400 shrink-0'/>}
-                            </div>
+                    return(
+                        <div 
+                            key={user._id}
+                            className='cursor-pointer hover:bg-zinc-800/50 p-3 rounded-md
+                            transition-colors group'
+                        >
+                            <div className='flex items-start gap-3'>
+                                <div className='relative'>
+                                    <Avatar className="size-10 border border-zinc-800">
+                                        <AvatarImage 
+                                            src={user.imageUrl}
+                                            alt={user.fullName}
+                                        />
+                                        {/* if no image was there then initials will show */}
+                                        <AvatarFallback>{user.fullName[0]}</AvatarFallback>
+                                    </Avatar>
 
-                            {isPlaying ? (
-                                <div className='mt-1'>
-                                    <div className='mt-1 text-sm text-white font-medium truncate'>Perfect</div>
-                                    <div className='text-xs text-zinc-400 truncate'>by Ed Sheran</div>
+                                    <div 
+                                        className={`absolute bottom-0 right-0 size-3 rounded-full border-2 border-zinc-900 
+                                            ${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"}
+                                            `}
+                                        aria-hidden='true' 
+                                    />
                                 </div>
-                            ) : (
-                                <div className='mt-1 text-xs text-zinc-400'>Idle</div>
-                            )}
+
+                                {/* user name part */}
+                                <div className='flex-1 min-w-0'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='font-medium text-sm text-white'>{user.fullName}</span>
+                                        {isPlaying && <Music className='size-3.5 text-emerald-400 shrink-0'/>}
+                                    </div>
+
+                                    {/* current playing song title an artist */}
+                                    {isPlaying ? (
+                                        <div className='mt-1'>
+                                            <div className='mt-1 text-sm text-white font-medium truncate'>
+                                                {activity.replace("Playing ","").split(" by ")[0]} 
+                                            </div>
+                                            <div className='text-xs text-zinc-400 truncate'>
+                                                {activity.split(" by ")[1]}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className='mt-1 text-xs text-zinc-400'>Idle</div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            ))}
+                    )
+                })}
+            </div>
         </ScrollArea>
     </div>
   )
