@@ -7,7 +7,7 @@ declare global {
 }
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: import.meta.env.MODE= "development" ? "http://localhost:5000/api" : "/api",
 });
 
 axiosInstance.interceptors.request.use(async (config) => {

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
 const LeftSidebar = () => {
     
 
-    const { albums , fetchAlbums, isLoading } = useMusicStore();
+    const { albums , fetchAlbums, isAlbumLoading } = useMusicStore();
 
     useEffect( ()=> {
         fetchAlbums();
@@ -67,7 +67,7 @@ const LeftSidebar = () => {
         {/* Album list */}
         <ScrollArea className= "h-[calc(100vh-300px)]">
             <div className="space-y-2">
-                {isLoading ? <PlaylistSkeleton /> :(
+                {isAlbumLoading ? <PlaylistSkeleton /> :(
                     albums.map( (album) => (
                         <Link to={`/albums/${album._id}`}
                             key = {album._id}

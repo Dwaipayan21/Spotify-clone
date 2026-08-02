@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 interface NewSong {
     title: string;
     artist: string;
-    album: string;
+    album: string | null;
     duration: string;
 }
 
@@ -21,7 +21,7 @@ const AddSongDialog = () => {
     const [ songDialogOpen, setSongDialogOpen] = useState(false);
     const [ isSongLoading, setIsSongloading] = useState(false);
 
-    const [newSong, setNewSong] = useState({
+    const [newSong, setNewSong] = useState<NewSong>({
         title: "",
         artist: "",
         album:"",
