@@ -25,6 +25,11 @@ const songSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Album',
         required: false
+    },
+    category: {
+        type: String,
+        enum: ["madeForYou", "trending"],
+        default: "madeForYou"
     }
 },{ timestamps: true}
 );

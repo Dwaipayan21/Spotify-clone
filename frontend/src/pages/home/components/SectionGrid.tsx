@@ -2,14 +2,17 @@ import SectionGridSkeleton from "@/components/skeletons/SectionGridSkeleton";
 import { Button } from "@/components/ui/button";
 import type { Song } from "@/types";
 import PlayButton from "./PlayButton";
+import { useNavigate } from "react-router-dom";
 
 type SectionGridProps = {
     title: string;
     songs: Song[];
     isSongsLoading:boolean;
+    type: "made-for-you" | "trending" ;
 }
 
-const SectionGrid = ({ title, songs, isSongsLoading }: SectionGridProps) => {
+const SectionGrid = ({ title, songs, isSongsLoading, type }: SectionGridProps) => {
+  const navigate = useNavigate();
 
   if(isSongsLoading) return <SectionGridSkeleton />
   return (
@@ -17,7 +20,11 @@ const SectionGrid = ({ title, songs, isSongsLoading }: SectionGridProps) => {
       {/* header row of made for you and trending sections */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
-        <Button variant='link' className='text-sm text-zinc-400 *:hover:text-white'>
+        <Button 
+          variant='link' 
+          className='text-sm text-zinc-400 *:hover:text-white'
+          onClick={ () => navigate(`/songs/${type}`)}
+          >
           Show all
         </Button>
       </div>

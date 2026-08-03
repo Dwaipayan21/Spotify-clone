@@ -45,8 +45,8 @@ const HomePage = () => {
             <FeaturedSection />
           
             <div className='space-y-8'>
-              <SectionGrid title="Made For You" songs={madeForYouSongs} isSongsLoading={isSongsLoading}/>
-              <SectionGrid title="Trending" songs={trendingSongs} isSongsLoading={isSongsLoading}/>
+              <SectionGrid title="Made For You" songs={madeForYouSongs} isSongsLoading={isSongsLoading} type='made-for-you'/>
+              <SectionGrid title="Trending" songs={trendingSongs} isSongsLoading={isSongsLoading} type='trending'/>
             </div>
           </div>
       </ScrollArea>
