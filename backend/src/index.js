@@ -17,6 +17,9 @@ import adminRoutes from "./routes/admin.route.js";
 import songRoutes from "./routes/songs.route.js";
 import albumRoutes from "./routes/albums.rouote.js";
 import statRoutes from "./routes/stat.route.js";
+import { fileURLToPath } from "url";
+
+
 
 dotenv.config();
 
