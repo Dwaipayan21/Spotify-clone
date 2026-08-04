@@ -3,7 +3,8 @@ import { Slider } from '@/components/ui/slider';
 import { formatDuration } from '@/pages/album/AlbumPage';
 import { usePlayerStore } from '@/stores/usePlayerStore'
 import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import { WalkingCharacter } from '@/components/WalkingCharacter';
 
 const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -53,6 +54,9 @@ export const PlayBackControls = () => {
             audioRef.current.currentTime = seekTime;
         }
     }
+
+    //for the character
+    const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
   return (
     <footer className='h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4'>
@@ -134,13 +138,16 @@ export const PlayBackControls = () => {
                     <div className='text-xs text-zinc-400'>
                         {formatTime(currentTime)}
                     </div>
-                    <Slider 
-                        value={[currentTime]}
-                        max={duration || 100}
-                        step={1}
-                        className='w-full hover:cursor-grab active:cursor-grabbing'
-                        onValueChange={handleSeek}
-                    />
+                    <div style={{position: 'relative', width: '100%'}}>
+                        <WalkingCharacter progress={progressPercent} isPlaying={isPlaying && !!currentSong } />
+                        <Slider 
+                            value={[currentTime]}
+                            max={duration || 100}
+                            step={1}
+                            className='w-full hover:cursor-grab active:cursor-grabbing'
+                            onValueChange={handleSeek}
+                        />
+                    </div>
                     <div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
                 </div>
             </div>
