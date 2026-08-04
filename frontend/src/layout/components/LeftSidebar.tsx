@@ -23,7 +23,7 @@ const LeftSidebar = () => {
   return (
     <div className="h-full flex flex-col gap-2">
         {/* Navigation */}
-        <div className="rounded-lg bg-zinc-900 p-4">
+        <div className="rounded-lg bg-zinc-900 p-4 shrink-0">
             <div className="space-y-2">
                 {/* home */}
                 <Link to={"/"}
@@ -56,8 +56,8 @@ const LeftSidebar = () => {
         </div>
 
         {/* Playlists */}
-        <div className="flex-1 rounded-lg bg-zinc-900 p-4">
-            <div className="flex items-center justify-between mb-4">
+        <div className="flex-1 rounded-lg bg-zinc-900 p-4 flex flex-col overflow-hidden ">
+            <div className="flex items-center justify-between mb-4 shrink-0">
                 <div className="flex items-center text-white px-2">
                     <Library className="size-5 mr-2"/>
                     <span className="hidden md:inline">Playlists</span>
