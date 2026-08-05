@@ -1,6 +1,6 @@
 import walkingAvocado from "./walkingAvocado.json";
 import Avo from "./Avo.png";
-import walkingOrange from "./WalkingOrange.json";
+import walkingOrange from "./walkingOrange.json";
 import Zesty from "./Zesty.png";
 import walkingCat from "./walkingCat.json";
 import Bloop from "./Bloop.png";
