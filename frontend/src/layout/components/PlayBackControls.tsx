@@ -5,6 +5,7 @@ import { usePlayerStore } from '@/stores/usePlayerStore'
 import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { WalkingCharacter } from '@/components/WalkingCharacter';
+import { CharacterPicker } from '@/components/CharacterPicker';
 
 const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -154,19 +155,20 @@ export const PlayBackControls = () => {
 
             {/* volume controls */}
             <div className='hidden sm:flex items-center gap-2 min-w-[180px] w-[30%] justify-end'>
-                {/* mic */}
-                <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
-                    <Mic2 className='h-4 w-4' />
-                </Button>
+                {/* character picker */}
+                <CharacterPicker />
+
                 {/* Listen music */}
                 <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
                     <ListMusic className='h-4 w-4' />
                 </Button>
+
                 {/* laptop icon */}
                 <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
                     <Laptop2 className='h-4 w-4' />
                 </Button>
 
+                {/* volume button */}
                 <div className='flex items-center gap-2'>
                     <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
                         <Volume1 className='size-4'/>
