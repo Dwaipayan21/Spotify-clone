@@ -17,7 +17,7 @@ const Topbar = () => {
     sticky top-0 bg-zinc-900/75 backdrop-blur-md z-10
     '>
         <div className='flex gap-2 items-center'>
-            <img src='/spotify.png' alt='waveform-logo'
+            <img src='/waveform.png' alt='waveform-logo'
                 className='size-7'
             />
             Waveform
